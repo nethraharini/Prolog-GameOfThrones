@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Game of Thrones | House of the Dragon</title>
+    <style>
+        /* Main Game of Thrones Theme */
+        body {
+            font-family: 'Times New Roman', serif;
+            background-color: #0a0a0a;
+            color: #d1d1d1;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            background-image: url('https://images.unsplash.com/photo-1518633625640-4f7ba068d0a4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+        }
+        
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #5a0000;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #7a0000;
+        }
+        
+        /* Sidebar styling */
+        .sidebar {
+            width: 280px;
+            background-color: rgba(10, 10, 10, 0.85);
+            color: #d1d1d1;
+            padding: 20px;
+            height: 100vh;
+            overflow-y: auto;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.7);
+            border-right: 1px solid #5a0000;
+            backdrop-filter: blur(5px);
+        }
+        
+        .sidebar h1 {
+            color: #a67c00;
+            border-bottom: 2px solid #5a0000;
+            padding-bottom: 10px;
+            font-family: 'Game of Thrones', 'Times New Roman', serif;
+            text-align: center;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+        }
+        
+        /* Main content area */
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            background-color: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(3px);
+        }
+        
+        /* Character list styling */
+        .character-list {
+            margin-top: 20px;
+        }
+        
+        .character-category {
+            margin-bottom: 30px;
+            border: 1px solid #333;
+            border-radius: 5px;
+            padding: 15px;
+            background-color: rgba(20, 20, 20, 0.6);
+        }
+        
+        .character-category h2 {
+            color: #a67c00;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-family: 'Game of Thrones', 'Times New Roman', serif;
+            text-align: center;
+            letter-spacing: 1px;
+            border-bottom: 1px solid #5a0000;
+            padding-bottom: 8px;
+        }
+        
+        .character-name {
+            padding: 8px 5px;
+            border-bottom: 1px solid #333;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .character-name:hover {
+            background-color: rgba(90, 0, 0, 0.3);
+            padding-left: 10px;
+        }
+        
+        .male {
+            color: #4a7497;
+        }
+        
+        .female {
+            color: #9e4a4a;
+        }
+        
+        /* Search form styling */
+        .search-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: rgba(20, 20, 20, 0.8);
+            border: 1px solid #5a0000;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        h1 {
+            color: #a67c00;
+            font-family: 'Game of Thrones', 'Times New Roman', serif;
+            text-align: center;
+            font-size: 2.5rem;
+            letter-spacing: 3px;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px #000;
+        }
+        
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        input, button {
+            padding: 12px 20px;
+            font-size: 18px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            background-color: rgba(30, 30, 30, 0.9);
+            color: #d1d1d1;
+            border: 1px solid #5a0000;
+            width: 100%;
+            max-width: 500px;
+            transition: all 0.3s ease;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #a67c00;
+            box-shadow: 0 0 10px rgba(166, 124, 0, 0.5);
+        }
+        
+        button {
+            background-color: #5a0000;
+            color: #d1d1d1;
+            cursor: pointer;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-top: 20px;
+        }
+        
+        button:hover {
+            background-color: #7a0000;
+            transform: translateY(-2px);
+        }
+        
+        /* Result box styling */
+        .result {
+            margin-top: 40px;
+            background-color: rgba(20, 20, 20, 0.8);
+            padding: 30px;
+            border-radius: 10px;
+            border: 1px solid #5a0000;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: left;
+        }
+        
+        .result h2 {
+            color: #a67c00;
+            font-family: 'Game of Thrones', 'Times New Roman', serif;
+            border-bottom: 1px solid #5a0000;
+            padding-bottom: 10px;
+            margin-top: 0;
+            letter-spacing: 1px;
+        }
+        
+        .result p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .result strong {
+            color: #a67c00;
+        }
+        
+        /* Game of Thrones font */
+        @font-face {
+            font-family: 'Game of Thrones';
+            src: url('https://cdn.jsdelivr.net/gh/artilleryhq/artillery@master/packages/artillery-core/src/console/assets/gameofthrones.ttf') format('truetype');
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h1>Characters</h1>
+        
+        <div class="character-list">
+            <div class="character-category">
+                <h2 class="male">Male Characters</h2>
+                <div class="character-name male">aegon_targaryen</div>
+                <div class="character-name male">aegon_v_targaryen</div>
+                <div class="character-name male">aeron_greyjoy</div>
+                <div class="character-name male">aerys_targaryen</div>
+                <div class="character-name male">balon_greyjoy</div>
+                <div class="character-name male">benjen_stark</div>
+                <div class="character-name male">bran_stark</div>
+                <div class="character-name male">brandon_stark</div>
+                <div class="character-name male">daeron_targaryen</div>
+                <div class="character-name male">doran_martell</div>
+                <div class="character-name male">duncan_targaryen</div>
+                <div class="character-name male">eddard_stark</div>
+                <div class="character-name male">euron_greyjoy</div>
+                <div class="character-name male">gendry</div>
+                <div class="character-name male">jaime_lannister</div>
+                <div class="character-name male">joffery_lannister</div>
+                <div class="character-name male">jon_snow</div>
+                <div class="character-name male">kevan_lannister</div>
+                <div class="character-name male">lancel_lannister</div>
+                <div class="character-name male">lewyn_martell</div>
+                <div class="character-name male">loras_tyrell</div>
+                <div class="character-name male">luthor_tyrell</div>
+                <div class="character-name male">mace_tyrell</div>
+                <div class="character-name male">maron_greyjoy</div>
+                <div class="character-name male">martyn_lannister</div>
+                <div class="character-name male">night_king</div>
+                <div class="character-name male">oberyn_martell</div>
+                <div class="character-name male">renly_baratheon</div>
+                <div class="character-name male">rhaegar_targaryen</div>
+                <div class="character-name male">rickard_stark</div>
+                <div class="character-name male">rickon_stark</div>
+                <div class="character-name male">robb_stark</div>
+                <div class="character-name male">robert_baratheon</div>
+                <div class="character-name male">rodrick_greyjoy</div>
+                <div class="character-name male">stannis_baratheon</div>
+                <div class="character-name male">steffon_baratheon</div>
+                <div class="character-name male">theon_greyjoy</div>
+                <div class="character-name male">tommen_lannister</div>
+                <div class="character-name male">trystane_martell</div>
+                <div class="character-name male">tyene_sand</div>
+                <div class="character-name male">tyrion_lannister</div>
+                <div class="character-name male">tytos_lannister</div>
+                <div class="character-name male">tywin_lannister</div>
+                <div class="character-name male">unknown_father_greyjoy</div>
+                <div class="character-name male">varys</div>
+                <div class="character-name male">viserys_targaryen</div>
+                <div class="character-name male">willem_lannister</div>
+            </div>
+            
+            <div class="character-category">
+                <h2 class="female">Female Characters</h2>
+                <div class="character-name female">alannys_harlaw</div>
+                <div class="character-name female">alerie_hightower</div>
+                <div class="character-name female">arya_stark</div>
+                <div class="character-name female">cassana_estermont</div>
+                <div class="character-name female">catelyn_stark</div>
+                <div class="character-name female">cersei_lannister</div>
+                <div class="character-name female">daenerys_targaryen</div>
+                <div class="character-name female">elia_martell</div>
+                <div class="character-name female">ellaria_sand</div>
+                <div class="character-name female">joanna_lannister</div>
+                <div class="character-name female">lyanna_stark</div>
+                <div class="character-name female">margaery_tyrell</div>
+                <div class="character-name female">mellario_of_norvos</div>
+                <div class="character-name female">myrcella_lannister</div>
+                <div class="character-name female">nymeria_sand</div>
+                <div class="character-name female">obara_sand</div>
+                <div class="character-name female">olenna_tyrell</div>
+                <div class="character-name female">rhaella_targaryen</div>
+                <div class="character-name female">rhaenys_targaryen</div>
+                <div class="character-name female">sansa_stark</div>
+                <div class="character-name female">sarella_sand</div>
+                <div class="character-name female">selyse_baratheon</div>
+                <div class="character-name female">shireen_baratheon</div>
+                <div class="character-name female">unknown_mothersand_1</div>
+                <div class="character-name female">unknown_mother_sand_2</div>
+                <div class="character-name female">unknown_mother_sand_3</div>
+                <div class="character-name female">unknown_mother_greyjoy</div>
+                <div class="character-name female">unknown_mother_lannister</div>
+                <div class="character-name female">unknown_mother_martell</div>
+                <div class="character-name female">unknown_mother_stark</div>
+                <div class="character-name female">unknown_mother_targaryen</div>
+                <div class="character-name female">yara_greyjoy</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="search-container">
+            <h1>Game of Thrones Character Lookup</h1>
+            <form method="POST">
+                <input type="text" name="name" placeholder="Enter character name (e.g. 'jon_snow')" required>
+                <button type="submit">Search the Realm</button>
+            </form>
+
+            {% if info %}
+                <div class="result">
+                    <h2>Character Information</h2>
+                    <p><strong>Gender:</strong> {{ info.gender }}</p>
+                    <p><strong>Status:</strong> {{ info.status }}</p>
+                    <p><strong>Concubine:</strong> {{ info.concubine }}</p>
+                    <p><strong>Parents:</strong> {{ info.parents | join(", ") if info.parents else "Unknown" }}</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
